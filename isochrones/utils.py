@@ -49,3 +49,7 @@ def to_graph(link_path, node_path):
                 raise ValueError(direction)
 
     return adjacency_list
+
+
+def compute_distances(graph, source):
+    pass
