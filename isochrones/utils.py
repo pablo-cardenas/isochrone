@@ -3,6 +3,7 @@ from scipy.spatial import KDTree
 from pyproj import Geod
 from shapely.geometry import shape
 from collections import defaultdict
+from heapq import heappush, heappop
 
 
 def to_graph(link_path, node_path):
@@ -52,4 +53,25 @@ def to_graph(link_path, node_path):
 
 
 def compute_distances(graph, source):
-    pass
+    q = [(0, int(source))]
+    dist = defaultdict(lambda: float('inf'), {int(source): 0})
+    seen = set()
+
+    while q:
+        curr_dist, v1 = heappop(q)
+
+        if v1 in seen:
+            continue
+
+        seen.add(v1)
+        for edge_dist, v2 in graph.get(str(v1), ()):
+            if v2 in seen:
+                continue
+
+            alt_dist = dist[v1] + edge_dist
+
+            if alt_dist < dist[v2]:
+                dist[v2] = alt_dist
+                heappush(q, (alt_dist, v2))
+
+    return dist
