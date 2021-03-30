@@ -27,6 +27,6 @@ def to_graph_command(link, node, output):
 @click.option('--output', type=click.File('w'))
 def compute_distances_command(graph, source, output):
     """Compute distance from a single source to all nodes"""
-    graph_dict = json.read(graph)
+    graph_dict = json.load(graph)
     distances = compute_distances(graph_dict, source)
     json.dump(distances, output)
