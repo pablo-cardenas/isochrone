@@ -1,4 +1,6 @@
 import click
+from .utils import to_graph
+import json
 
 
 @click.group()
@@ -10,6 +12,7 @@ def cli():
 @click.option('--link')
 @click.option('--node')
 @click.option('--output')
-def to_graph(link, node, output):
+def to_graph_command(link, node, output):
     """Create a json file with the adjacency list representation of the graph"""
-    print("hola")
+    graph = to_graph(link, node)
+    json.dump(graph, open(output, 'w'))

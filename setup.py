@@ -9,6 +9,8 @@ setup(
             'Fiona',
             'Click',
             'scipy',
+            'pyproj',
+            'shapely',
     ],
     entry_points="""
         [console_scripts]
