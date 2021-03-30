@@ -75,3 +75,18 @@ def compute_distances(graph, source):
                 heappush(q, (alt_dist, v2))
 
     return dist
+
+
+def add_field(shapefile, field, output, field_name, field_type):
+    with fiona.open(shapefile) as input_c:
+        input_c.schema['properties'][field_name] = 'float'
+        with fiona.open(output, "w", driver=input_c.driver, crs=input_c.crs,
+                        schema=input_c.schema) as output_c:
+
+            rec_list = []
+            for rec in input_c:
+                rec['properties'][field_name] = field.get(
+                    str(rec['properties']['id']), 9999999)
+                rec_list.append(rec)
+
+            output_c.writerecords(rec_list)
